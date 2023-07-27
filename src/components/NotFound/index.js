@@ -4,6 +4,7 @@ import Button from '@mui/material/Button'
 const NotFound = props => {
   const goToLoginPage = () => {
     const {history} = props
+    localStorage.removeItem('token')
     history.push('/login')
   }
   return (
