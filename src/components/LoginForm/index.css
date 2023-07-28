@@ -115,8 +115,6 @@
   color: #ffffff;
   height: 40px;
   width: 100%;
-  margin-top: 20px;
-  margin-bottom: 2px;
   background-color: #0b69ff;
   border-radius: 8px;
   border: none;
@@ -132,4 +130,8 @@
   font-size: 12px;
   line-height: 16px;
   color: #ff0b37;
+}
+.button-container {
+  width: 100%;
+  margin-top: 20px;
 }

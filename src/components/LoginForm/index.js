@@ -1,6 +1,7 @@
 import {Component} from 'react'
 import {Redirect} from 'react-router-dom'
-
+import Button from '@mui/material/Button'
+import TextField from '@mui/material/TextField'
 import './index.css'
 
 class LoginForm extends Component {
@@ -24,9 +25,11 @@ class LoginForm extends Component {
     this.setState({phoneNo: event.target.value})
   }
 
-  onSubmitSuccess = jwtToken => {
+  onSubmitSuccess = () => {
     const {history} = this.props
-    localStorage.setItem('token', jwtToken)
+    const {username, email, phoneNo} = this.state
+    const userDetails = {username, email, phoneNo}
+    localStorage.setItem('token', userDetails)
 
     history.replace('/page-two')
   }
@@ -39,8 +42,7 @@ class LoginForm extends Component {
     event.preventDefault()
     const {username, email, phoneNo} = this.state
     if (username !== '' && email !== '' && phoneNo !== '') {
-      const jwtToken = 'khajahascreatedajwttoken'
-      this.onSubmitSuccess(jwtToken)
+      this.onSubmitSuccess()
     } else {
       this.onSubmitFailure()
     }
@@ -50,15 +52,17 @@ class LoginForm extends Component {
     const {email} = this.state
     return (
       <>
-        <label className="input-label" htmlFor="email">
-          EMAIL
-        </label>
-        <input
+        <TextField
           type="email"
           id="email"
-          className="password-input-field"
           value={email}
           onChange={this.onChangeEmail}
+          label="EMAIL"
+          margin="normal"
+          size="small"
+          fullWidth
+          variant="standard"
+          color="warning"
         />
       </>
     )
@@ -68,15 +72,17 @@ class LoginForm extends Component {
     const {username} = this.state
     return (
       <>
-        <label className="input-label" htmlFor="username">
-          NAME
-        </label>
-        <input
+        <TextField
           type="text"
-          id="username"
-          className="username-input-field"
+          id="text"
           value={username}
           onChange={this.onChangeUsername}
+          label="NAME"
+          margin="normal"
+          size="small"
+          fullWidth
+          variant="standard"
+          color="warning"
         />
       </>
     )
@@ -86,16 +92,21 @@ class LoginForm extends Component {
     const {phoneNo} = this.state
     return (
       <>
-        <label className="input-label" htmlFor="phoneNo">
-          PHONENO
-        </label>
-        <input
+        <TextField
           value={phoneNo}
           onChange={this.onChangePhoneNo}
-          pattern="[0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9]"
-          type="tel"
+          inputProps={{
+            inputMode: 'numeric',
+            pattern: '[0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9]',
+          }}
+          type="text"
+          fullWidth
           id="phoneNo"
-          className="username-input-field"
+          margin="normal"
+          label="PHONENO"
+          size="small"
+          variant="standard"
+          color="warning"
         />
       </>
     )
@@ -127,12 +138,19 @@ class LoginForm extends Component {
             className="login-website-logo-desktop-image"
             alt="website logo"
           />
-          <div className="input-container">{this.renderUsernameField()}</div>
-          <div className="input-container">{this.renderPhoneNoField()}</div>
-          <div className="input-container">{this.renderEmailField()}</div>
-          <button type="submit" className="login-button">
-            Login
-          </button>
+          <>{this.renderUsernameField()}</>
+          <>{this.renderPhoneNoField()}</>
+          <>{this.renderEmailField()}</>
+          <div className="button-container">
+            <Button
+              variant="contained"
+              type="submit"
+              margin="dense"
+              className="login-button"
+            >
+              Login
+            </Button>
+          </div>
           {showSubmitError && <p className="error-message">*{errorMsg}</p>}
         </form>
       </div>
